@@ -12,9 +12,11 @@ using Notification.Wpf.Base.Interfaces.Options;
 using Notification.Wpf.Classes;
 using Notification.Wpf.Constants;
 using Notification.Wpf.Controls;
-
+using Notification.Wpf.Utils;
 using Notifications.Wpf.Annotations;
 using Notifications.Wpf.ViewModels;
+using System.Windows.Forms;
+using Application = System.Windows.Application;
 
 namespace Notification.Wpf
 {
@@ -343,7 +345,38 @@ namespace Notification.Wpf
 
             if (areaName == string.Empty && _window == null)
             {
-                var workArea = SystemParameters.WorkArea;
+                Rect workArea;
+
+                var hwnd = NativeMethods.GetForegroundWindow();
+
+                Screen screen;
+                uint dpiX = 96;
+
+                if (hwnd != IntPtr.Zero)
+                {
+                    screen = Screen.FromHandle(hwnd);
+
+                    var hMonitor = NativeMethods.MonitorFromWindow(hwnd, 2); // MONITOR_DEFAULTTONEAREST
+                    if (hMonitor != IntPtr.Zero &&
+                        NativeMethods.GetDpiForMonitor(hMonitor, NativeMethods.MDT_EFFECTIVE_DPI, out dpiX, out _) == 0)
+                    {
+                        // dpiX set correctly
+                    }
+                }
+                else
+                {
+                    screen = Screen.PrimaryScreen;
+                }
+
+                var scale = dpiX / 96.0;
+                var wa = screen.WorkingArea;
+
+                workArea = new Rect(
+                    wa.Left / scale,
+                    wa.Top / scale,
+                    wa.Width / scale,
+                    wa.Height / scale
+                );
 
                 _window = new NotificationsOverlayWindow
                 {
@@ -355,10 +388,8 @@ namespace Notification.Wpf
                     MaxWindowItems = NotificationConstants.NotificationsOverlayWindowMaxCount,
                     MessagePosition = NotificationConstants.MessagePosition
                 };
-                _window.Closed += (_, _) =>
-                {
-                    _window = null;
-                };
+
+                _window.Closed += (_, _) => _window = null;
             }
 
             if (Areas != null && _window is { IsVisible: false })

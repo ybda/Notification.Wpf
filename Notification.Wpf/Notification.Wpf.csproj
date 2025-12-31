@@ -1,13 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	<PackageId>Ybda.Notification.Wpf.Fork</PackageId>
     <TargetFrameworks>net8.0-windows;net7.0-windows;net6.0-windows;net5.0-windows;netcoreapp3.1-windows;net4.6-windows;net4.6.1-windows;net4.7-windows;net4.8-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <LangVersion>latest</LangVersion>
-    <Version>8.0.0.0</Version>
+    <Version>8.0.1-ybda.1</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Notifications.Wpf.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
+	<UseWindowsForms>true</UseWindowsForms>
+	
+	<dpiAwareness>PerMonitorV2</dpiAwareness>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -23,14 +27,14 @@
   <PropertyGroup>
     <Description>This project will help you take notification window like in windows</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/Platonenkov/Notification.Wpf</PackageProjectUrl>
-    <Copyright>https://github.com/Platonenkov</Copyright>
-    <Authors>Platonenkov</Authors>
-    <Company>https://github.com/Platonenkov</Company>
+    <PackageProjectUrl>https://github.com/ybda/Notification.Wpf</PackageProjectUrl>
+    <Copyright>https://github.com/ybda</Copyright>
+    <Authors>ybda</Authors>
+    <Company>https://github.com/ybda</Company>
     <PackageIcon>icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/Platonenkov/Notification.Wpf</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ybda/Notification.Wpf</RepositoryUrl>
     <PackageTags>Toast Notifications WPF</PackageTags>
-    <PackageReleaseNotes>.net8 support</PackageReleaseNotes>
+    <PackageReleaseNotes>Forked version with bugfix: DPI awareness</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
